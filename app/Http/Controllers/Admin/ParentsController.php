@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\User;
-use App\Models\Parent;
+use App\Models\Parents;
 use Illuminate\Http\Request;
 use App\Services\MediaService;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 
-class ParentController extends Controller
+class ParentsController extends Controller
 {
     protected $genders = [ 'Male', 'Female', 'Other'];
     /**
@@ -19,7 +19,7 @@ class ParentController extends Controller
      */
     public function index()
     {
-        $parents = Parent::with(['media'])->paginate(10)->get();
+        $parents = Parents::with(['media'])->paginate(10);
 
         return view('admin.parents.index', compact('parents'));
     }
@@ -46,7 +46,7 @@ class ParentController extends Controller
     {
         $request->validate([
             'name' => ['required', 'max:50'],
-            'email' => ['required', 'unique:parents,email'],
+            'email' => ['required', 'unique:users,email'],
             'password' => ['required', 'min:6', 'max:100', 'confirmed'],
             'phone' => ['required','unique:teachers,phone'],
             'image' => ['nullable', 'image', 'mimes:png,jpeg,gif'],
@@ -62,9 +62,10 @@ class ParentController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
+            'role'  =>  'Parent'
         ]);
 
-        $user->parent()->create([
+        $user->parents()->create([
             'phone' => $request->phone,
             'media_id' => $media_id ?? null,
             'address' => $request->address,
@@ -72,7 +73,7 @@ class ParentController extends Controller
             'role'  =>  'Parent'
         ]);
 
-        return redirect()->route('admin.teachers.index')
+        return redirect()->route('admin.parents.index')
             ->with('success', 'New Parent Created Successfully!');
     }
 
@@ -82,7 +83,7 @@ class ParentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Parent $parent)
+    public function show(Parents $parent)
     {
         return view('admin.parents.show', compact('parent'));
     }
@@ -93,11 +94,11 @@ class ParentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Parent $parent)
+    public function edit(Parents $parent)
     {
         $genders = $this->genders;
 
-        return view('admin.parents.create', compact('genders', 'parent'));
+        return view('admin.parents.edit', compact('genders', 'parent'));
     }
 
     /**
@@ -107,12 +108,11 @@ class ParentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Parent $parent)
+    public function update(Request $request, Parents $parent)
     {
         $request->validate([
             'name' => ['required', 'max:50'],
-            'email' => ['required', 'unique:parents,email'],
-            'password' => ['required', 'min:6', 'max:100', 'confirmed'],
+            'email' => ['required', 'unique:users,email, '.$parent->user->id],
             'phone' => ['required','unique:teachers,phone'],
             'image' => ['nullable', 'image', 'mimes:png,jpeg,gif'],
             'address' => ['required'],
@@ -124,9 +124,9 @@ class ParentController extends Controller
         }
 
         $parent->user()->update([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
+            'name' => $request->name ?? $parent->user->name,
+            'email' => $request->email ?? $parent->user->email,
+            'role'  =>  'Parent'
         ]);
 
         $parent->update([
@@ -137,7 +137,7 @@ class ParentController extends Controller
             'role'  =>  'Parent'
         ]);
 
-        return redirect()->route('admin.teachers.index')
+        return redirect()->route('admin.parents.index')
             ->with('success', 'Parent Updated Successfully!');
     }
 
@@ -147,11 +147,9 @@ class ParentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Parent $parent)
+    public function destroy(Parents $parent)
     {
-        $parent->delete();
-
         return redirect()->route('admin.parents.index')
-            ->with('success', 'Parent Deleted Successfully !!');
+            ->with('error', 'You cannot delete an parent!');
     }
 }

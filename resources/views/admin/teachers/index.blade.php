@@ -36,7 +36,7 @@
                         <td>{{ $teacher->id }}</td>
                         <td class='text-center'>
                             @if($teacher->media_id)
-                                <img src="/storage/{{ $teacher->media->path }}" height="30px">
+                                <img src="/storage/{{ $teacher->media->path }}" height="40px" width="60px">
                             @endif
                         </td>
                         <td>{{ $teacher->name }}</td>
