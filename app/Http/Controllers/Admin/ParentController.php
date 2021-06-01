@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Teacher;
+use App\Models\User;
+use App\Models\Parent;
 use Illuminate\Http\Request;
 use App\Services\MediaService;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 
-class TeacherController extends Controller
+class ParentController extends Controller
 {
-    protected  $genders = ['Male', 'Female', 'Other'];
+    protected $genders = [ 'Male', 'Female', 'Other'];
     /**
      * Display a listing of the resource.
      *
@@ -18,9 +19,9 @@ class TeacherController extends Controller
      */
     public function index()
     {
-        $teachers = Teacher::with(['media'])->paginate(10);
+        $parents = Parent::with(['media'])->paginate(10)->get();
 
-        return view('admin.teachers.index', compact('teachers'));
+        return view('admin.parents.index', compact('parents'));
     }
 
     /**
@@ -31,7 +32,8 @@ class TeacherController extends Controller
     public function create()
     {
         $genders = $this->genders;
-        return view('admin.teachers.create', compact('genders'));
+
+        return view('admin.parents.create', compact('genders'));
     }
 
     /**
@@ -43,68 +45,8 @@ class TeacherController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name'  =>  ['required', 'max:100'],
-            'email' =>  ['required','unique:teachers,email'],
-            'password' => ['required', 'min:6', 'max:100', 'confirmed'],
-            'phone' => ['required','unique:teachers,phone'],
-            'image' => ['nullable', 'image', 'mimes:png,jpeg,gif'],
-            'address' => ['required'],
-            'gender' => ['required',Rule::in($this->genders)],
-        ]);
-
-        if ($request->has('image') && !empty($request->file('image'))) {
-            $media_id = MediaService::upload($request->file('image'), "users");
-        }
-
-        Teacher::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
-            'phone' => $request->phone,
-            'media_id' => $media_id ?? null,
-            'address' => $request->address,
-            'gender'    => $request->gender,
-        ]);
-
-        return redirect()->route('admin.teachers.index')
-            ->with('success', 'New Teacher Created Successfully!');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Teacher $teacher)
-    {
-        return view('admin.teachers.show', compact('teacher'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Teacher $teacher)
-    {
-        $genders = $this->genders;
-        return view('admin.teachers.edit', compact('teacher', 'genders'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Teacher $teacher)
-    {
-        $request->validate([
-            'name'  =>  ['required', 'max:100'],
-            'email' =>  ['required','unique:teachers,email,'. $teacher->id],
+            'name' => ['required', 'max:50'],
+            'email' => ['required', 'unique:parents,email'],
             'password' => ['required', 'min:6', 'max:100', 'confirmed'],
             'phone' => ['required','unique:teachers,phone'],
             'image' => ['nullable', 'image', 'mimes:png,jpeg,gif'],
@@ -116,18 +58,87 @@ class TeacherController extends Controller
             $media_id = MediaService::upload($request->file('image'), "users");
         }
 
-        $teacher->update([
+        $user= User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
+        ]);
+
+        $user->parent()->create([
             'phone' => $request->phone,
-            'media_id' => $media_id ?? $teacher->media_id,
+            'media_id' => $media_id ?? null,
             'address' => $request->address,
             'gender'    => $request->gender,
+            'role'  =>  'Parent'
         ]);
 
         return redirect()->route('admin.teachers.index')
-            ->with('success', 'Teacher Updated Successfully!');
+            ->with('success', 'New Parent Created Successfully!');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Parent $parent)
+    {
+        return view('admin.parents.show', compact('parent'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Parent $parent)
+    {
+        $genders = $this->genders;
+
+        return view('admin.parents.create', compact('genders', 'parent'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Parent $parent)
+    {
+        $request->validate([
+            'name' => ['required', 'max:50'],
+            'email' => ['required', 'unique:parents,email'],
+            'password' => ['required', 'min:6', 'max:100', 'confirmed'],
+            'phone' => ['required','unique:teachers,phone'],
+            'image' => ['nullable', 'image', 'mimes:png,jpeg,gif'],
+            'address' => ['required'],
+            'gender' => ['required',Rule::in($this->genders)]
+        ]);
+
+        if ($request->has('image') && !empty($request->file('image'))) {
+            $media_id = MediaService::upload($request->file('image'), "users");
+        }
+
+        $parent->user()->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+        ]);
+
+        $parent->update([
+            'phone' => $request->phone,
+            'media_id' => $media_id ?? $parent->media_id,
+            'address' => $request->address,
+            'gender'    => $request->gender,
+            'role'  =>  'Parent'
+        ]);
+
+        return redirect()->route('admin.teachers.index')
+            ->with('success', 'Parent Updated Successfully!');
     }
 
     /**
@@ -136,11 +147,11 @@ class TeacherController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Teacher $teacher)
+    public function destroy(Parent $parent)
     {
-        $teacher->delete();
+        $parent->delete();
 
-        return redirect()->route('admin.teachers.index')
-            ->with('success', 'Teacher Deleted Successfully !!');
+        return redirect()->route('admin.parents.index')
+            ->with('success', 'Parent Deleted Successfully !!');
     }
 }
