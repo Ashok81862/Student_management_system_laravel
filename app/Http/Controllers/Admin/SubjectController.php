@@ -60,7 +60,7 @@ class SubjectController extends Controller
      */
     public function show(Subject $subject)
     {
-        return view('admin.subjects.create' , compact('subject'));
+        return view('admin.subjects.show' , compact('subject'));
     }
 
     /**

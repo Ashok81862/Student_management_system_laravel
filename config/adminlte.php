@@ -252,8 +252,8 @@ return [
             'icon'        => 'nav-icon fas fa-fw fa-chalkboard-teacher',
         ],
         [
-            'text'        => 'Books',
-            'url'         => '/admin/books',
+            'text'        => 'Subjects',
+            'url'         => '/admin/subjects',
             'icon'        => 'nav-icon fas fa-fw fa-book',
         ],
 
