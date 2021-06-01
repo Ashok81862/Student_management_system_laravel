@@ -32,4 +32,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     //Teacher Routes
     Route::resource('teachers', \App\Http\Controllers\Admin\TeacherController::class);
 
+    //Subject Routes
+    Route::resource('subjects', \App\Http\Controllers\Admin\SubjectController::class);
+
 });
