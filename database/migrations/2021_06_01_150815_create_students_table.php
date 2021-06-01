@@ -18,8 +18,7 @@ class CreateStudentsTable extends Migration
             $table->string('address');
             $table->string('phone');
             $table->string('gender');
-            $table->string('role')->default('Student');
-            $table->date('dob');
+            $table->string('role');
             $table->foreignId('media_id')->nullable();
             $table->foreignId('user_id');
             $table->foreignId('parent_id');

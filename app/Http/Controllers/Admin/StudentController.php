@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Room;
 use App\Models\User;
+use App\Models\Parents;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use App\Services\MediaService;
+use Illuminate\Support\Carbon;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 
@@ -33,7 +36,12 @@ class StudentController extends Controller
     {
         $genders = $this->genders;
 
-        return view('admin.parents.create', compact('genders'));
+        $rooms = Room::select(['id', 'name'])->get();
+
+        $parents = Parents::all();
+
+
+        return view('admin.students.create', compact('genders','rooms','parents'));
     }
 
     /**
@@ -48,7 +56,7 @@ class StudentController extends Controller
             'name' => ['required', 'max:50'],
             'email' => ['required', 'unique:users,email'],
             'password' => ['required', 'min:6', 'max:100', 'confirmed'],
-            'phone' => ['required','unique:teachers,phone'],
+            'phone' => ['required','unique:students,phone'],
             'image' => ['nullable', 'image', 'mimes:png,jpeg,gif'],
             'address' => ['required'],
             'gender' => ['required',Rule::in($this->genders)],
@@ -77,7 +85,7 @@ class StudentController extends Controller
             'role'  =>  'Student'
         ]);
 
-        return redirect()->route('admin.parents.index')
+        return redirect()->route('admin.students.index')
             ->with('success', 'New Student Created Successfully!');
     }
 
@@ -102,7 +110,11 @@ class StudentController extends Controller
     {
         $genders = $this->genders;
 
-        return view('admin.students.edit', compact('genders', 'student'));
+        $rooms = Room::select(['id', 'name'])->get();
+
+        $parents = Parents::all();
+
+        return view('admin.students.edit', compact('genders', 'student' ,'rooms' , 'parents'));
     }
 
     /**
@@ -145,7 +157,7 @@ class StudentController extends Controller
             'role'  =>  'Student'
         ]);
 
-        return redirect()->route('admin.parents.index')
+        return redirect()->route('admin.students.index')
             ->with('success', 'Parent Updated Successfully!');
     }
 

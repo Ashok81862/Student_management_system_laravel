@@ -38,4 +38,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
      //Parent Routes
      Route::resource('parents', \App\Http\Controllers\Admin\ParentsController::class);
 
+     //Student Routes
+    Route::resource('students', \App\Http\Controllers\Admin\StudentController::class);
+
 });
