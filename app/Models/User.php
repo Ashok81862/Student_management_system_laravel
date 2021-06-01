@@ -41,4 +41,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Media::class);
     }
+
+    public function parents()
+    {
+        return $this->hasMany(Parents::class);
+    }
 }

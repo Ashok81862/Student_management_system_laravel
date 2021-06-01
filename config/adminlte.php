@@ -256,6 +256,11 @@ return [
             'url'         => '/admin/subjects',
             'icon'        => 'nav-icon fas fa-fw fa-book',
         ],
+        [
+            'text'        => 'Parents',
+            'url'         => '/admin/parents',
+            'icon'        => 'nav-icon fas fa-fw fa-user-friends',
+        ],
 
     ],
 

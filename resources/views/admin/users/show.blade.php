@@ -47,7 +47,7 @@
                     <td>Photo</td>
                     <td>
                         @if($user->media_id)
-                            <img src="/storage/{{ $user->media->path }}" height="30px">
+                            <img src="/storage/{{ $user->media->path }}" height="150px" width="150px">
                         @endif
                     </td>
                 </tr>
