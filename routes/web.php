@@ -16,3 +16,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/home', [\App\Http\Controllers\SiteController::class, 'home'])->middleware('auth');
+
+Route::middleware(['auth', 'admin'])->prefix('/admin')->name('admin')->group(function (){
+    Route::get('/', [\App\Http\Controllers\Admin\AdminController::class, 'index']);
+});
