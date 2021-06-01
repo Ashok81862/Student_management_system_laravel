@@ -27,7 +27,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::resource('users', \App\Http\Controllers\Admin\UserController::class);
 
     //Room Routes
-    Route::get('/', \App\Http\Controllers\Admin\RoomController::class);
+    Route::resource('rooms', \App\Http\Controllers\Admin\RoomController::class);
 
 
 });

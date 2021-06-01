@@ -17,7 +17,7 @@
             </div>
         </div>
         <div class="card-body">
-            <form method="post" action="{{ route('admin.rooms.store') }}">
+            <form method="post" action="{{ route('admin.rooms.update', $room->id) }}">
                 @csrf @method('PUT')
 
                 <div class="form-group">
