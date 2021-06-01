@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,6 +20,9 @@ Route::get('/', function () {
 
 Route::get('/home', [\App\Http\Controllers\SiteController::class, 'home'])->middleware('auth');
 
-Route::middleware(['auth', 'admin'])->prefix('/admin')->name('admin')->group(function (){
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function (){
     Route::get('/', [\App\Http\Controllers\Admin\AdminController::class, 'index']);
+
+    //Users Routes
+    Route::resource('users', \App\Http\Controllers\Admin\UserController::class);
 });
