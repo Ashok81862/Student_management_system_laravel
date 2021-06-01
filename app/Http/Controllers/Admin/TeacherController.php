@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
 use App\Services\MediaService;
+use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 
 class TeacherController extends Controller
 {
+    protected  $genders = ['Male', 'Female', 'Other'];
     /**
      * Display a listing of the resource.
      *
@@ -28,7 +30,8 @@ class TeacherController extends Controller
      */
     public function create()
     {
-        return view('admin.teachers.create');
+        $genders = $this->genders;
+        return view('admin.teachers.create', compact('genders'));
     }
 
     /**
@@ -46,7 +49,7 @@ class TeacherController extends Controller
             'phone' => ['required','unique:teachers,phone'],
             'image' => ['nullable', 'image', 'mimes:png,jpeg,gif'],
             'address' => ['required'],
-            'gender' => ['required']
+            'gender' => ['required',Rule::in($this->genders)],
         ]);
 
         if ($request->has('image') && !empty($request->file('image'))) {
@@ -57,14 +60,13 @@ class TeacherController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
-            'role' => $request->role,
             'phone' => $request->phone,
             'media_id' => $media_id ?? null,
             'address' => $request->address,
             'gender'    => $request->gender,
         ]);
 
-        return redirect()->route('admin.users.index')
+        return redirect()->route('admin.teachers.index')
             ->with('success', 'New Teacher Created Successfully!');
     }
 
@@ -87,7 +89,8 @@ class TeacherController extends Controller
      */
     public function edit(Teacher $teacher)
     {
-        return view('admin.teachers.edit', compact('teacher'));
+        $genders = $this->genders;
+        return view('admin.teachers.edit', compact('teacher', 'genders'));
     }
 
     /**
@@ -101,12 +104,12 @@ class TeacherController extends Controller
     {
         $request->validate([
             'name'  =>  ['required', 'max:100'],
-            'email' =>  ['required','unique:teachers,email'. $teacher->id],
+            'email' =>  ['required','unique:teachers,email,'. $teacher->id],
             'password' => ['required', 'min:6', 'max:100', 'confirmed'],
             'phone' => ['required','unique:teachers,phone'],
             'image' => ['nullable', 'image', 'mimes:png,jpeg,gif'],
             'address' => ['required'],
-            'gender' => ['required']
+            'gender' => ['required',Rule::in($this->genders)]
         ]);
 
         if ($request->has('image') && !empty($request->file('image'))) {
@@ -117,14 +120,13 @@ class TeacherController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
-            'role' => $request->role,
             'phone' => $request->phone,
             'media_id' => $media_id ?? null,
             'address' => $request->address,
             'gender'    => $request->gender,
         ]);
 
-        return redirect()->route('admin.users.index')
+        return redirect()->route('admin.teachers.index')
             ->with('success', 'Teacher Updated Successfully!');
     }
 
