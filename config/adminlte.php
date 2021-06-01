@@ -246,6 +246,11 @@ return [
             'url'         => '/admin/rooms',
             'icon'        => 'nav-icon fas fa-fw fa-chalkboard',
         ],
+        [
+            'text'        => 'Teachers',
+            'url'         => '/admin/teachers',
+            'icon'        => 'nav-icon fas fa-fw fa-chalkboard-teacher',
+        ],
 
     ],
 

@@ -29,5 +29,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     //Room Routes
     Route::resource('rooms', \App\Http\Controllers\Admin\RoomController::class);
 
+    //Teacher Routes
+    Route::resource('teachers', \App\Http\Controllers\Admin\TeacherController::class);
 
 });

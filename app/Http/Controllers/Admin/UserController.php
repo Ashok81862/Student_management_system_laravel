@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Storage;
 class UserController extends Controller
 {
     protected $roles = [
-        'User',
+        'Teacher','Student','Parent',
         'Admin',
     ];
 
