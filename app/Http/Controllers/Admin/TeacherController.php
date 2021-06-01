@@ -2,20 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\User;
+use App\Models\Teacher;
 use Illuminate\Http\Request;
 use App\Services\MediaService;
-use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Storage;
 
-class UserController extends Controller
+class TeacherController extends Controller
 {
-    protected $roles = [
-        'Teacher','Student','Parent',
-        'Admin',
-    ];
-
     /**
      * Display a listing of the resource.
      *
@@ -23,9 +16,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::with(['media'])->paginate(10);
+        $teachers = Teacher::with(['media'])->paginate(10);
 
-        return view('admin.users.index', compact('users'));
+        return view('admin.teachers.index', compact('teachers'));
     }
 
     /**
@@ -35,9 +28,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        $roles = $this->roles;
-
-        return view('admin.users.create', compact('roles'));
+        return view('admin.teachers.create');
     }
 
     /**
@@ -49,30 +40,32 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => ['required', 'max:100'],
-            'email' => ['required', 'email', 'max:100', 'unique:users,email'],
+            'name'  =>  ['required', 'max:100'],
+            'email' =>  ['required','unique:teachers,email'],
             'password' => ['required', 'min:6', 'max:100', 'confirmed'],
-            'role' => ['required', Rule::in($this->roles)],
-            'phone' => ['required','unique:users,phone'],
+            'phone' => ['required','unique:teachers,phone'],
             'image' => ['nullable', 'image', 'mimes:png,jpeg,gif'],
+            'address' => ['required'],
+            'gender' => ['required']
         ]);
 
         if ($request->has('image') && !empty($request->file('image'))) {
             $media_id = MediaService::upload($request->file('image'), "users");
         }
 
-        User::create([
+        Teacher::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
             'role' => $request->role,
             'phone' => $request->phone,
             'media_id' => $media_id ?? null,
+            'address' => $request->address,
+            'gender'    => $request->gender,
         ]);
 
         return redirect()->route('admin.users.index')
-            ->with('success', 'New User Created Successfully!');
-
+            ->with('success', 'New Teacher Created Successfully!');
     }
 
     /**
@@ -81,9 +74,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show(Teacher $teacher)
     {
-        return view('admin.users.show', compact('user'));
+        return view('admin.teachers.show', compact('teacher'));
     }
 
     /**
@@ -92,50 +85,47 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit(Teacher $teacher)
     {
-        $roles = $this->roles;
-        return view('admin.users.edit', compact('user', 'roles'));
+        return view('admin.teachers.edit', compact('teacher'));
     }
 
-     /**
+    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,User $user)
+    public function update(Request $request, Teacher $teacher)
     {
         $request->validate([
-            'name' => ['required', 'max:100'],
-            'email' => ['required', 'email', 'max:100', 'unique:users,email,'. $user->id],
-            'password' => ['nullable', 'min:6', 'max:100', 'confirmed'],
-            'role' => ['required', Rule::in($this->roles)],
-            'phone' => ['required','unique:users,phone,'. $user->id],
+            'name'  =>  ['required', 'max:100'],
+            'email' =>  ['required','unique:teachers,email'. $teacher->id],
+            'password' => ['required', 'min:6', 'max:100', 'confirmed'],
+            'phone' => ['required','unique:teachers,phone'],
             'image' => ['nullable', 'image', 'mimes:png,jpeg,gif'],
+            'address' => ['required'],
+            'gender' => ['required']
         ]);
 
         if ($request->has('image') && !empty($request->file('image'))) {
-            if ($user->media_id)
-                Storage::delete("public/" . $user->media->path);
             $media_id = MediaService::upload($request->file('image'), "users");
         }
 
-
-        $user->name = $request->name;
-        $user->email = $request->email;
-        if (!empty($request->password))
-            $user->password = bcrypt($request->password);
-
-        $user->role = $request->role;
-        $user->phone = $request->phone;
-        $user->media_id = $media_id ?? $user->media_id;
-        $user->save();
-
+        $teacher->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'role' => $request->role,
+            'phone' => $request->phone,
+            'media_id' => $media_id ?? null,
+            'address' => $request->address,
+            'gender'    => $request->gender,
+        ]);
 
         return redirect()->route('admin.users.index')
-            ->with('success', 'User Updated Successfully!');
+            ->with('success', 'Teacher Updated Successfully!');
     }
 
     /**
@@ -144,13 +134,11 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy(Teacher $teacher)
     {
-        return redirect()->route('admin.users.index')
-            ->with('error', 'You cannot delete an user!');
+        $teacher->delete();
+
+        return redirect()->route('admin.teachers.index')
+            ->with('success', 'Teacher Deleted Successfully !!');
     }
-
-
-
-
 }
