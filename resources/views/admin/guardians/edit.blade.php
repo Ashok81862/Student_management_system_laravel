@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Update Parent')
+@section('title', 'Update Guardian')
 
 @section('plugins.Select2', true)
 
@@ -18,16 +18,16 @@
 
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title text-bold" style="font-size:1.4rem">Update Parent</h3>
+            <h3 class="card-title text-bold" style="font-size:1.4rem">Update guardian</h3>
             <div class="card-tools">
-                <a href="{{ route('admin.parents.index') }}" class="btn btn-sm btn-info">
+                <a href="{{ route('admin.guardians.index') }}" class="btn btn-sm btn-info">
                     <i class="fas fa-fw fa-arrow-left mr-1"></i>
                     <span>Go Back</span>
                 </a>
             </div>
         </div>
         <div class="card-body">
-            <form method="post" action="{{ route('admin.parents.update', $parent->id) }}" enctype="multipart/form-data">
+            <form method="post" action="{{ route('admin.guardians.update', $guardian->id) }}" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <div class="form-group">
@@ -35,7 +35,7 @@
                     <input
                         type="text"
                         name="name" id="name"
-                        value="{{ old('name') ?? $parent->user->name }}"
+                        value="{{ old('name') ?? $guardian->user->name }}"
                         class="form-control @error('name') is-invalid @enderror"
                         autofocus
                     >
@@ -49,7 +49,7 @@
                     <input
                         type="email"
                         name="email" id="email"
-                        value="{{ old('email') ?? $parent->user->email }}"
+                        value="{{ old('email') ?? $guardian->user->email }}"
                         class="form-control @error('email') is-invalid @enderror"
                     >
                     @error('email')
@@ -64,7 +64,7 @@
                         class="form-control @error('gender') is-invalid @enderror"
                     >
                         @foreach($genders as $gender)
-                            <option value="{{ $gender }}" @if($parent->gender == $gender) selected @endif>{{ $gender }}</option>
+                            <option value="{{ $gender }}" @if($guardian->gender == $gender) selected @endif>{{ $gender }}</option>
                         @endforeach
                     </select>
 
@@ -78,7 +78,7 @@
                     <input
                         type="number"
                         name="phone" id="phone"
-                        value="{{ old('phone') ?? $parent->phone }}"
+                        value="{{ old('phone') ?? $guardian->phone }}"
                         class="form-control @error('phone') is-invalid @enderror"
                     >
                     @error('phone')
@@ -91,7 +91,7 @@
                     <input
                         type="text"
                         name="address" id="address"
-                        value="{{ old('address') ?? $parent->address }}"
+                        value="{{ old('address') ?? $guardian->address }}"
                         class="form-control @error('address') is-invalid @enderror"
                     >
                     @error('address')
@@ -112,8 +112,8 @@
                 </div>
 
                 <div class="mt-4 mb-1">
-                    <input type="submit" class="btn btn-primary" value="Update Parent">
-                    <a href="{{ route('admin.parents.index') }}" class="btn btn-link float-right">Cancel</a>
+                    <input type="submit" class="btn btn-primary" value="Update guardian">
+                    <a href="{{ route('admin.guardians.index') }}" class="btn btn-link float-right">Cancel</a>
                 </div>
 
 

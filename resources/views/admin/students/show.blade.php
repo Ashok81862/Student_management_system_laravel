@@ -52,9 +52,9 @@
                     <td>{{ $student->address }}</td>
                 </tr>
                 <tr>
-                    <td>Parents</td>
+                    <td>Guardians</td>
                     <td>
-                        <a href="{{ route('admin.parents.show',$student->parent_id ) }}">{{ $student->parent->user->name }}</a>
+                        <a href="{{ route('admin.guardians.show',$student->guardian_id ) }}">{{ $student->guardian_id}}</a>
                     </td>
                 </tr>
                 <tr>

@@ -15,7 +15,7 @@
     });
 
     $(document).ready(function() {
-        $('#parent_id').select2();
+        $('#guardian_id').select2();
     });
 </script>
 @endpush
@@ -98,13 +98,13 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="parent_id">Parent Name </label>
+                    <label for="guardian_id">Guardian Name </label>
                     <select
-                        name="parent_id" id="parent_id"
-                        class="form-control @error('parent_id') is-invalid @enderror"
+                        name="guardian_id" id="guardian_id"
+                        class="form-control @error('guardian_id') is-invalid @enderror"
                     >
-                        @foreach($parents as $parent)
-                            <option value="{{ $parent->user_id }}" @if($student->parent_id == $parent->user_id) selected @endif>{{ $parent->user->name }}</option>
+                        @foreach($guardians as $guardian)
+                            <option value="{{ $guardian->user_id }}" @if($student->guardian_id == $guardian->user_id) selected @endif>{{ $guardian->user->name }}</option>
                         @endforeach
                     </select>
 

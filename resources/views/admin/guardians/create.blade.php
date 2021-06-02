@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Add New Parent')
+@section('title', 'Add New Guardian')
 
 @section('plugins.Select2', true)
 
@@ -18,16 +18,16 @@
 
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title text-bold" style="font-size:1.4rem">Add New Parent Account</h3>
+            <h3 class="card-title text-bold" style="font-size:1.4rem">Add New Guardian Account</h3>
             <div class="card-tools">
-                <a href="{{ route('admin.parents.index') }}" class="btn btn-sm btn-info">
+                <a href="{{ route('admin.guardians.index') }}" class="btn btn-sm btn-info">
                     <i class="fas fa-fw fa-arrow-left mr-1"></i>
                     <span>Go Back</span>
                 </a>
             </div>
         </div>
         <div class="card-body">
-            <form method="post" action="{{ route('admin.parents.store') }}" enctype="multipart/form-data">
+            <form method="post" action="{{ route('admin.guardians.store') }}" enctype="multipart/form-data">
                 @csrf
 
                 <div class="form-group">
@@ -136,8 +136,8 @@
                 </div>
 
                 <div class="mt-4 mb-1">
-                    <input type="submit" class="btn btn-primary" value="Add New parent">
-                    <a href="{{ route('admin.parents.index') }}" class="btn btn-link float-right">Cancel</a>
+                    <input type="submit" class="btn btn-primary" value="Add New guardian">
+                    <a href="{{ route('admin.guardians.index') }}" class="btn btn-link float-right">Cancel</a>
                 </div>
 
 

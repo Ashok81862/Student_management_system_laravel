@@ -21,13 +21,18 @@ class Student extends Model
         return $this->belongsTo(Room::class);
     }
 
-    public function parent()
+    public function guardian()
     {
-        return $this->belongsTo(Parents::class);
+        return $this->belongsTo(Guardian::class, 'guardian_id', 'id');
     }
 
     public function user()
     {
         return $this->belongsTo(User::class);
     }
+
+    // public function guardianDetail()
+    // {
+    //     return $this->belongsTo(Guardian::class, 'guardian_id', 'id');
+    // }
 }

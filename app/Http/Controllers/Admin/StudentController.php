@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Room;
 use App\Models\User;
-use App\Models\Parents;
 use App\Models\Student;
+use App\Models\Guardian;
 use Illuminate\Http\Request;
 use App\Services\MediaService;
 use Illuminate\Support\Carbon;
@@ -38,10 +38,10 @@ class StudentController extends Controller
 
         $rooms = Room::select(['id', 'name'])->get();
 
-        $parents = Parents::all();
+        $guardians = Guardian::all();
 
 
-        return view('admin.students.create', compact('genders','rooms','parents'));
+        return view('admin.students.create', compact('genders','rooms','guardians'));
     }
 
     /**
@@ -56,12 +56,12 @@ class StudentController extends Controller
             'name' => ['required', 'max:50'],
             'email' => ['required', 'unique:users,email'],
             'password' => ['required', 'min:6', 'max:100', 'confirmed'],
-            'phone' => ['required','unique:students,phone'],
+            'phone' => ['required'],
             'image' => ['nullable', 'image', 'mimes:png,jpeg,gif'],
             'address' => ['required'],
             'gender' => ['required',Rule::in($this->genders)],
             'room_id' => ['required'],
-            'parent_id' => ['required'],
+            'guardian_id' => ['required'],
         ]);
 
         if ($request->has('image') && !empty($request->file('image'))) {
@@ -81,7 +81,7 @@ class StudentController extends Controller
             'media_id' => $media_id ?? null,
             'address' => $request->address,
             'gender'    => $request->gender,
-            'parent_id' => $request->parent_id,
+            'guardian_id' => $request->guardian_id,
             'room_id'   =>  $request->room_id,
             'role'  =>  'Student'
         ]);
@@ -113,9 +113,9 @@ class StudentController extends Controller
 
         $rooms = Room::select(['id', 'name'])->get();
 
-        $parents = Parents::all();
+        $guardians = Guardian::all();
 
-        return view('admin.students.edit', compact('genders', 'student' ,'rooms' , 'parents'));
+        return view('admin.students.edit', compact('genders', 'student' ,'rooms' , 'guardians'));
     }
 
     /**
@@ -130,12 +130,12 @@ class StudentController extends Controller
         $request->validate([
             'name' => ['required', 'max:50'],
             'email' => ['required', 'unique:users,email, '.$student->user->id],
-            'phone' => ['required','unique:teachers,phone'],
+            'phone' => ['required'],
             'image' => ['nullable', 'image', 'mimes:png,jpeg,gif'],
             'address' => ['required'],
             'gender' => ['required',Rule::in($this->genders)],
             'room_id' => ['required'],
-            'parent_id' => ['required'],
+            'guardian_id' => ['required'],
         ]);
 
         if ($request->has('image') && !empty($request->file('image'))) {
@@ -154,7 +154,7 @@ class StudentController extends Controller
             'media_id' => $media_id ?? $student->media_id,
             'address' => $request->address,
             'gender'    => $request->gender,
-            'parent_id' =>  $request->parent_id,
+            'guardian_id' =>  $request->guardian_id,
             'room_id'   =>  $request->room_id,
             'role'  =>  'Student'
         ]);

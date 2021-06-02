@@ -42,9 +42,14 @@ class User extends Authenticatable
         return $this->belongsTo(Media::class);
     }
 
-    public function parent()
+    public function guardian()
     {
-        return $this->hasOne(Parents::class);
+        return $this->hasOne(Guardian::class);
+    }
+
+    public function guardians()
+    {
+        return $this->hasMany(Guardian::class);
     }
 
     public function student()
