@@ -48,7 +48,7 @@ class ParentsController extends Controller
             'name' => ['required', 'max:50'],
             'email' => ['required', 'unique:users,email'],
             'password' => ['required', 'min:6', 'max:100', 'confirmed'],
-            'phone' => ['required','unique:teachers,phone'],
+            'phone' => ['required'],
             'image' => ['nullable', 'image', 'mimes:png,jpeg,gif'],
             'address' => ['required'],
             'gender' => ['required',Rule::in($this->genders)]
@@ -62,7 +62,8 @@ class ParentsController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
-            'role'  =>  'Parent'
+            'role'  =>  'Parent',
+            'media_id' => $media_id ?? null,
         ]);
 
         $user->parents()->create([
@@ -113,7 +114,7 @@ class ParentsController extends Controller
         $request->validate([
             'name' => ['required', 'max:50'],
             'email' => ['required', 'unique:users,email, '.$parent->user->id],
-            'phone' => ['required','unique:teachers,phone'],
+            'phone' => ['required'],
             'image' => ['nullable', 'image', 'mimes:png,jpeg,gif'],
             'address' => ['required'],
             'gender' => ['required',Rule::in($this->genders)]
@@ -126,7 +127,8 @@ class ParentsController extends Controller
         $parent->user()->update([
             'name' => $request->name ?? $parent->user->name,
             'email' => $request->email ?? $parent->user->email,
-            'role'  =>  'Parent'
+            'role'  =>  'Parent',
+            'media_id' => $media_id ?? $parent->media_id,
         ]);
 
         $parent->update([
