@@ -11,6 +11,15 @@ class SiteController extends Controller
         if(auth()->user()->role == 'Admin')
             return redirect('/admin');
 
+        if(auth()->user()->role == 'Parent')
+            return redirect('/parents');
+
+        if(auth()->user()->role == 'Student')
+            return redirect('/students');
+
+        if(auth()->user()->role == 'Teacher')
+            return redirect('/teachers');
+
         return redirect('/');
     }
 }

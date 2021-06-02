@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 Route::get('/home', [\App\Http\Controllers\SiteController::class, 'home'])->middleware('auth');
@@ -50,3 +50,12 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::resource('students', \App\Http\Controllers\Admin\StudentController::class);
 
 });
+
+   //Parent Routes
+   Route::get('/parents', [\App\Http\Controllers\ParentController::class, 'index'])->name('parents');
+
+   //Teacher Routes
+   Route::get('/teachers', [\App\Http\Controllers\TeacherController::class, 'index'])->name('teachers');
+
+   //Student Routes
+   Route::get('/students', [\App\Http\Controllers\StudentController::class, 'index'])->name('students');
