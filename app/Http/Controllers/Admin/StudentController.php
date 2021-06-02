@@ -72,7 +72,8 @@ class StudentController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
-            'role'  =>  'Student'
+            'role'  =>  'Student',
+            'media_id' => $media_id ?? null,
         ]);
 
         $user->students()->create([
@@ -144,7 +145,8 @@ class StudentController extends Controller
         $student->user()->update([
             'name' => $request->name ?? $student->user->name,
             'email' => $request->email ?? $student->user->email,
-            'role'  =>  'Student'
+            'role'  =>  'Student',
+            'media_id' => $media_id ?? $student->media_id,
         ]);
 
         $student->update([

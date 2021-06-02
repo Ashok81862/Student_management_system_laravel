@@ -9,33 +9,35 @@
         </div>
         <div class="card-body d-flex justify-content-around">
             <div class="w-25">
-                <img src="https://github.com/mdo.png" width="100%" height="200px"  alt="">
+                @if($user->media->path)
+                    <img src="/storage/{{ $user->media->path}}" width="100%" height="200px"  alt="">
+                @endif
             </div>
             <table class="table table-bordered w-50">
                     <tr>
                         <td>Name </td>
-                        <td>Ashok</td>
+                        <td>{{ $user->name }}</td>
+                    </tr>
+                    <tr>
+                        <td>Email</td>
+                        <td>{{ $user->email }}</td>
                     </tr>
                     <tr>
                         <td>Address</td>
-                        <td>Bharatpur-10</td>
+                        <td>{{ $user->student->address }}</td>
                     </tr>
                     <tr>
-                        <td>Address</td>
-                        <td>Bharatpur-10</td>
+                        <td>Phone</td>
+                        <td>{{ $user->student->phone }}</td>
                     </tr>
                     <tr>
-                        <td>Address</td>
-                        <td>Bharatpur-10</td>
+                        <td>Class</td>
+                        <td>{{ $user->student->room->name }}</td>
                     </tr>
-                    <tr>
-                        <td>Room</td>
-                        <td>Ten</td>
-                    </tr>
-                    <tr>
+                    {{-- <tr>
                        <td>Parents</td>
-                       <td>ABCDE</td>
-                    </tr>
+                       <td>{{ $user->student->parent->name }}</td>
+                    </tr> --}}
             </table>
         </div>
       </div>

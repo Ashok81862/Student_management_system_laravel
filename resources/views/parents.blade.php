@@ -8,38 +8,41 @@
         </div>
         <div class="card-body d-flex justify-content-around">
             <div class="w-25">
-                <img src="https://github.com/mdo.png" width="100%" height="200px"  alt="">
+                @if($user->media->path)
+                    <img src="/storage/{{ $user->media->path}}" width="100%" height="200px"  alt="">
+                @endif
             </div>
             <table class="table table-bordered w-50">
                     <tr>
                         <td>Name </td>
-                        <td>Ashok</td>
+                        <td>{{ $user->name }}</td>
+                    </tr>
+                    <tr>
+                        <td>Email</td>
+                        <td>{{ $user->email }}</td>
                     </tr>
                     <tr>
                         <td>Address</td>
-                        <td>Bharatpur-10</td>
+                        <td>{{ $user->parent->address }}</td>
                     </tr>
                     <tr>
-                        <td>Address</td>
-                        <td>Bharatpur-10</td>
-                    </tr>
-                    <tr>
-                        <td>Address</td>
-                        <td>Bharatpur-10</td>
+                        <td>Gender</td>
+                        <td>{{ $user->parent->gender }}</td>
                     </tr>
                     <tr>
                         <td>Phone Number</td>
-                        <td>9845806638</td>
+                        <td>{{ $user->parent->phone }}</td>
                     </tr>
-                    <tr>
+                    {{-- <tr>
                         <td>Children</td>
                         <td>
                             <ul>
-                                <li>Child One</li>
-                                <li>Child Two</li>
+                                @foreach ($user->parent->students as $student)
+                                    <li>{{ $student->name }}</li>
+                                @endforeach
                             </ul>
                         </td>
-                    </tr>
+                    </tr> --}}
             </table>
         </div>
       </div>
