@@ -52,6 +52,16 @@
                     </td>
                 </tr>
                 <tr>
+                    <td>Subjects</td>
+                    <td>
+                        <ul>
+                            @foreach ( $room->subjects as $subject )
+                               <li>{{ $subject->name }}</li>
+                           @endforeach()
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
                     <td>Created At</td>
                     <td>{{ $room->created_at }}</td>
                 </tr>

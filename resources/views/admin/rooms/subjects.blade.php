@@ -64,7 +64,7 @@
                 <tbody>
                     @foreach($room->subjects as $subject)
                     <tr>
-                        <td>{{ $subject->user->name }}</td>
+                        <td>{{ $subject->name }}</td>
                         <td>
                             <!-- Delete -->
                             <a href="#" onclick="confirmDelete({{ $subject->id }})" class="btn btn-danger btn-sm">

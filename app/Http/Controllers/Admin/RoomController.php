@@ -6,6 +6,8 @@ use App\Models\Room;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Subject;
+use GrahamCampbell\ResultType\Result;
 
 class RoomController extends Controller
 {
@@ -125,7 +127,7 @@ class RoomController extends Controller
                 $room->teachers()->attach($request->teacher_id);
 
         return redirect()->route('admin.rooms.teachers', $room->id)
-            ->with('success', 'Teacher has been added to Room successfully!');
+            ->with('success', 'Teacher has been added to Room successfully !!');
 
     }
 
@@ -138,7 +140,40 @@ class RoomController extends Controller
         $room->teachers()->detach($request->teacher_id);
 
         return redirect()->route('admin.rooms.teachers', $room->id)
-            ->with('success', 'Teacher has been removed from Room successfully!');
-
+            ->with('success', 'Teacher has been removed from Room successfully !!');
     }
+
+    public function subjects(Room $room)
+    {
+        $subjects = Subject::select(['id', 'name'])->get();
+
+        return view('admin.rooms.subjects', compact('subjects', 'room'));
+    }
+
+    public function addSubject(Request $request, Room $room)
+    {
+        $request->validate([
+            'subject_id'    => ['required', 'exists:subjects,id'],
+        ]);
+
+        if(!in_array($request->subject_id, $room->subjects->pluck('id')->toArray()))
+            $room->subjects()->attach($request->subject_id);
+
+        return redirect()->route('admin.rooms.subjects', $room->id)
+            ->with('success', 'Subject has been added to Room successfully !!');
+    }
+
+    public function removeSubject(Request $request, Room $room)
+    {
+        $request->validate([
+            'subject_id' => 'required|exists:rooms,id',
+        ]);
+
+        $room->subjects()->detach($request->subject_id);
+
+        return redirect()->route('admin.rooms.subjects', $room->id)
+            ->with('success', 'Subject has been removed from Room successfully !!');
+    }
+
+
 }
