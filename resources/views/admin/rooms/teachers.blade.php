@@ -40,7 +40,7 @@
                         class="form-control @error('teacher_id') is-invalid @enderror"
                     >
                         @foreach($teachers as $teacher)
-                            <option value="{{ $teacher->id }}" @if(old('teacher_id') == $teacher->id) selected @endif>{{ $teacher->name }}</option>
+                            <option value="{{ $teacher->id }}" @if(old('teacher_id') == $teacher->id) selected @endif>{{ $teacher->user->name }}</option>
                         @endforeach
                     </select>
 
@@ -64,7 +64,7 @@
                 <tbody>
                     @foreach($room->teachers as $teacher)
                     <tr>
-                        <td>{{ $teacher->name }}</td>
+                        <td>{{ $teacher->user->name }}</td>
                         <td>
                             <!-- Delete -->
                             <a href="#" onclick="confirmDelete({{ $teacher->id }})" class="btn btn-danger btn-sm">

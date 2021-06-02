@@ -29,11 +29,11 @@
                 </tr>
                 <tr>
                     <td>Name</td>
-                    <td>{{ $teacher->name }}</td>
+                    <td>{{ $teacher->user->name }}</td>
                 </tr>
                 <tr>
                     <td>Email</td>
-                    <td>{{ $teacher->email }}</td>
+                    <td>{{ $teacher->user->email }}</td>
                 </tr>
                 <tr>
                     <td>Gender</td>

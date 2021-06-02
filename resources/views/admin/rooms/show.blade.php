@@ -40,12 +40,9 @@
                     <td>Teachers</td>
                     <td>
                         <ul>
-                            @if ($room->teachers != Null)
-                                @foreach ( $room->teachers as $teacher )
-                                    <li>{{ $teacher->name }}</li>
-                                @endforeach()
-                            @endif
-                            <li>No Teacher</li>
+                            @foreach ( $room->teachers as $teacher )
+                               <li>{{ $teacher->user->name }}</li>
+                           @endforeach()
                         </ul>
                     </td>
                 </tr>
