@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Parents extends Model
+class Guardian extends Model
 {
     use HasFactory;
 
@@ -24,5 +24,10 @@ class Parents extends Model
     public function student()
     {
         return $this->belongsTo(Student::class);
+    }
+
+    public function students()
+    {
+        return $this->hasMany(Student::class);
     }
 }

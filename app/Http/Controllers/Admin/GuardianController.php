@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\User;
-use App\Models\Parents;
+use App\Models\Guardian;
 use Illuminate\Http\Request;
 use App\Services\MediaService;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 
-class ParentsController extends Controller
+class GuardianController extends Controller
 {
     protected $genders = [ 'Male', 'Female', 'Other'];
     /**
@@ -19,9 +19,9 @@ class ParentsController extends Controller
      */
     public function index()
     {
-        $parents = Parents::with(['media'])->paginate(10);
+        $guardians = Guardian::with(['media'])->paginate(10);
 
-        return view('admin.parents.index', compact('parents'));
+        return view('admin.guardians.index', compact('guardians'));
     }
 
     /**
@@ -33,7 +33,7 @@ class ParentsController extends Controller
     {
         $genders = $this->genders;
 
-        return view('admin.parents.create', compact('genders'));
+        return view('admin.guardians.create', compact('genders'));
     }
 
     /**
@@ -55,7 +55,7 @@ class ParentsController extends Controller
         ]);
 
         if ($request->has('image') && !empty($request->file('image'))) {
-            $media_id = MediaService::upload($request->file('image'), "parents");
+            $media_id = MediaService::upload($request->file('image'), "guardians");
         }
 
         $user= User::create([
@@ -66,7 +66,7 @@ class ParentsController extends Controller
             'media_id' => $media_id ?? null,
         ]);
 
-        $user->parents()->create([
+        $user->guardians()->create([
             'phone' => $request->phone,
             'media_id' => $media_id ?? null,
             'address' => $request->address,
@@ -74,8 +74,8 @@ class ParentsController extends Controller
             'role'  =>  'Parent'
         ]);
 
-        return redirect()->route('admin.parents.index')
-            ->with('success', 'New Parent Created Successfully!');
+        return redirect()->route('admin.guardians.index')
+            ->with('success', 'New guardian Created Successfully!');
     }
 
     /**
@@ -84,9 +84,10 @@ class ParentsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Parents $parent)
+    public function show(Guardian $guardian)
     {
-        return view('admin.parents.show', compact('parent'));
+
+        return view('admin.guardians.show', compact('guardian'));
     }
 
     /**
@@ -95,11 +96,11 @@ class ParentsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Parents $parent)
+    public function edit(Guardian $guardian)
     {
         $genders = $this->genders;
 
-        return view('admin.parents.edit', compact('genders', 'parent'));
+        return view('admin.guardians.edit', compact('genders', 'guardian'));
     }
 
     /**
@@ -109,11 +110,11 @@ class ParentsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Parents $parent)
+    public function update(Request $request, Guardian $guardian)
     {
         $request->validate([
             'name' => ['required', 'max:50'],
-            'email' => ['required', 'unique:users,email, '.$parent->user->id],
+            'email' => ['required', 'unique:users,email, '.$guardian->user->id],
             'phone' => ['required'],
             'image' => ['nullable', 'image', 'mimes:png,jpeg,gif'],
             'address' => ['required'],
@@ -121,26 +122,26 @@ class ParentsController extends Controller
         ]);
 
         if ($request->has('image') && !empty($request->file('image'))) {
-            $media_id = MediaService::upload($request->file('image'), "parents");
+            $media_id = MediaService::upload($request->file('image'), "guardians");
         }
 
-        $parent->user()->update([
-            'name' => $request->name ?? $parent->user->name,
-            'email' => $request->email ?? $parent->user->email,
+        $guardian->user()->update([
+            'name' => $request->name ?? $guardian->user->name,
+            'email' => $request->email ?? $guardian->user->email,
             'role'  =>  'Parent',
-            'media_id' => $media_id ?? $parent->media_id,
+            'media_id' => $media_id ?? $guardian->media_id,
         ]);
 
-        $parent->update([
+        $guardian->update([
             'phone' => $request->phone,
-            'media_id' => $media_id ?? $parent->media_id,
+            'media_id' => $media_id ?? $guardian->media_id,
             'address' => $request->address,
             'gender'    => $request->gender,
             'role'  =>  'Parent'
         ]);
 
-        return redirect()->route('admin.parents.index')
-            ->with('success', 'Parent Updated Successfully!');
+        return redirect()->route('admin.guardians.index')
+            ->with('success', 'guardian Updated Successfully!');
     }
 
     /**
@@ -149,9 +150,9 @@ class ParentsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Parents $parent)
+    public function destroy(Guardian $guardian)
     {
-        return redirect()->route('admin.parents.index')
-            ->with('error', 'You cannot delete an parent!');
+        return redirect()->route('admin.guardians.index')
+            ->with('error', 'You cannot delete an guardian!');
     }
 }

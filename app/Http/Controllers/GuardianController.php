@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class ParentController extends Controller
+class GuardianController extends Controller
 {
     public function index()
     {
@@ -13,6 +13,6 @@ class ParentController extends Controller
 
         //dd($user);
 
-        return view('parents' , compact('user'));
+        return view('guardians' , compact('user'));
     }
 }

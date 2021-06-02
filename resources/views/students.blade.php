@@ -34,10 +34,10 @@
                         <td>Class</td>
                         <td>{{ $user->student->room->name }}</td>
                     </tr>
-                    {{-- <tr>
+                    <tr>
                        <td>Parents</td>
-                       <td>{{ $user->student->parent->name }}</td>
-                    </tr> --}}
+                       <td>{{ $user->student->parentDetail->name }}</td>
+                    </tr>
             </table>
         </div>
       </div>

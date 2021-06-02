@@ -257,8 +257,8 @@ return [
             'icon'        => 'nav-icon fas fa-fw fa-book',
         ],
         [
-            'text'        => 'Parents',
-            'url'         => '/admin/parents',
+            'text'        => 'Guardians',
+            'url'         => '/admin/guardians',
             'icon'        => 'nav-icon fas fa-fw fa-user-friends',
         ],
         [

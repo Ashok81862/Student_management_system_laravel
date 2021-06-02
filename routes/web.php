@@ -44,7 +44,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::resource('subjects', \App\Http\Controllers\Admin\SubjectController::class);
 
      //Parent Routes
-     Route::resource('parents', \App\Http\Controllers\Admin\ParentsController::class);
+     Route::resource('guardians', \App\Http\Controllers\Admin\GuardianController::class);
 
      //Student Routes
     Route::resource('students', \App\Http\Controllers\Admin\StudentController::class);
@@ -52,7 +52,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 });
 
    //Parent Routes
-   Route::get('/parents', [\App\Http\Controllers\ParentController::class, 'index'])->name('parents');
+   Route::get('/guardians', [\App\Http\Controllers\GuardianController::class, 'index'])->name('guardians');
 
    //Teacher Routes
    Route::get('/teachers', [\App\Http\Controllers\TeacherController::class, 'index'])->name('teachers');

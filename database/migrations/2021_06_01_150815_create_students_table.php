@@ -21,7 +21,7 @@ class CreateStudentsTable extends Migration
             $table->string('role');
             $table->foreignId('media_id')->nullable();
             $table->foreignId('user_id');
-            $table->foreignId('parent_id');
+            $table->foreignId('guardian_id');
             $table->foreignId('room_id');
             $table->timestamps();
         });

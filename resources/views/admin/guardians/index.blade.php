@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'All Parents')
+@section('title', 'All Guardians')
 
 @section('content')
 
@@ -10,9 +10,9 @@
 
     <div class="card">
         <div class="card-header border-bottom-0">
-            <h3 class="card-title text-bold" style="font-size:1.4rem">All Parents</h3>
+            <h3 class="card-title text-bold" style="font-size:1.4rem">All Guardians</h3>
             <div class="card-tools">
-                <a href="{{ route('admin.parents.create') }}" class="btn btn-sm btn-info">
+                <a href="{{ route('admin.guardians.create') }}" class="btn btn-sm btn-info">
                     <i class="fas fa-fw fa-plus-circle mr-1"></i>
                     <span>Add New</span>
                 </a>
@@ -30,37 +30,37 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($parents as $parent)
+                    @foreach($guardians as $guardian)
                     <tr>
-                        <td>{{ $parent->id }}</td>
+                        <td>{{ $guardian->id }}</td>
                         <td class='text-center'>
-                            @if($parent->media_id)
-                                <img src="/storage/{{ $parent->media->path }}" height="40px" width="60px">
+                            @if($guardian->media_id)
+                                <img src="/storage/{{ $guardian->media->path }}" height="40px" width="60px">
                             @endif
                         </td>
-                        <td>{{ $parent->user->name }}</td>
-                        <td>{{ $parent->phone  }}</td>
+                        <td>{{ $guardian->user->name }}</td>
+                        <td>{{ $guardian->phone  }}</td>
                         <td>
                             <!-- Show -->
-                            <a href="{{ route('admin.parents.show', $parent->id) }}" class="btn btn-secondary btn-sm">
+                            <a href="{{ route('admin.guardians.show', $guardian->id) }}" class="btn btn-secondary btn-sm">
                                 <i class="fas fa-fw fa-eye mr-1"></i>
                                 <span>Details</span>
                             </a>
 
                             <!-- Edit -->
-                            <a href="{{ route('admin.parents.edit', $parent->id) }}" class="btn btn-primary btn-sm">
+                            <a href="{{ route('admin.guardians.edit', $guardian->id) }}" class="btn btn-primary btn-sm">
                                 <i class="fas fa-fw fa-edit mr-1"></i>
                                 <span>Edit</span>
                             </a>
 
                             <!-- Delete -->
-                            <a href="#" onclick="confirmDelete({{ $parent->id }})" class="btn btn-danger btn-sm">
+                            <a href="#" onclick="confirmDelete({{ $guardian->id }})" class="btn btn-danger btn-sm">
                                 <i class="fas fa-fw fa-edit mr-1"></i>
                                 <span>Delete</span>
                             </a>
 
                             <!-- Delete Form -->
-                            <form id="delete-form-{{ $parent->id }}" action="{{ route('admin.parents.destroy', $parent->id) }}" method="post">
+                            <form id="delete-form-{{ $guardian->id }}" action="{{ route('admin.guardians.destroy', $guardian->id) }}" method="post">
                                 @csrf @method('DELETE')
                             </form>
                         </td>
@@ -69,9 +69,9 @@
                 </tbody>
             </table>
         </div>
-        @if($parents->total() > 30)
+        @if($guardians->total() > 30)
         <div class="card-footer">
-            {{ $parents->links() }}
+            {{ $guardians->links() }}
         </div>
         @endif
     </div>
