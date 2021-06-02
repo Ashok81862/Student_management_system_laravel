@@ -36,6 +36,16 @@
                     <td>{{ $subject->code }}</td>
                 </tr>
                 <tr>
+                    <td>Room</td>
+                    <td>
+                        @foreach ($subject->rooms as $subject )
+                            <li>
+                                <a href="{{ route('admin.rooms.show', $subject->id) }}">{{ $subject->name }}</a>
+                            </li>
+                        @endforeach
+                    </td>
+                </tr>
+                <tr>
                     <td>Created At</td>
                     <td>{{ $subject->created_at }}</td>
                 </tr>

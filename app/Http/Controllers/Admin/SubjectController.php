@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\Room;
 use App\Models\Subject;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class SubjectController extends Controller
 {
@@ -60,7 +61,9 @@ class SubjectController extends Controller
      */
     public function show(Subject $subject)
     {
-        return view('admin.subjects.show' , compact('subject'));
+        $rooms = Room::select(['id', 'name'])->get();
+
+        return view('admin.subjects.show' , compact('subject', 'rooms'));
     }
 
     /**
