@@ -39,9 +39,9 @@
                                 <img src="/storage/{{ $teacher->media->path }}" height="40px" width="60px">
                             @endif
                         </td>
-                        <td>{{ $teacher->name }}</td>
+                        <td>{{ $teacher->user->name }}</td>
                         <td>{{ $teacher->role }}</td>
-                        <td>{{ $teacher->email }}</td>
+                        <td>{{ $teacher->user->email }}</td>
                         <td>
                             <!-- Show -->
                             <a href="{{ route('admin.teachers.show', $teacher->id) }}" class="btn btn-secondary btn-sm">

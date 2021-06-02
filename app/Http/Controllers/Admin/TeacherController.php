@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Room;
+use App\Models\User;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
 use App\Services\MediaService;
@@ -44,7 +46,7 @@ class TeacherController extends Controller
     {
         $request->validate([
             'name'  =>  ['required', 'max:100'],
-            'email' =>  ['required','unique:teachers,email'],
+            'email' =>  ['required','unique:users,email'],
             'password' => ['required', 'min:6', 'max:100', 'confirmed'],
             'phone' => ['required','unique:teachers,phone'],
             'image' => ['nullable', 'image', 'mimes:png,jpeg,gif'],
@@ -56,14 +58,21 @@ class TeacherController extends Controller
             $media_id = MediaService::upload($request->file('image'), "users");
         }
 
-        Teacher::create([
+        $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
+            'role'  =>  'Teacher',
+            'phone' => $request->phone,
+            'media_id' => $media_id ?? null,
+        ]);
+
+        $user->teachers()->create([
             'phone' => $request->phone,
             'media_id' => $media_id ?? null,
             'address' => $request->address,
             'gender'    => $request->gender,
+            'role'  =>  'Teacher'
         ]);
 
         return redirect()->route('admin.teachers.index')
@@ -104,8 +113,7 @@ class TeacherController extends Controller
     {
         $request->validate([
             'name'  =>  ['required', 'max:100'],
-            'email' =>  ['required','unique:teachers,email,'. $teacher->id],
-            'password' => ['required', 'min:6', 'max:100', 'confirmed'],
+            'email' =>  ['required','unique:users,email,'. $teacher->user->id],
             'phone' => ['required','unique:teachers,phone'],
             'image' => ['nullable', 'image', 'mimes:png,jpeg,gif'],
             'address' => ['required'],
@@ -116,14 +124,20 @@ class TeacherController extends Controller
             $media_id = MediaService::upload($request->file('image'), "users");
         }
 
-        $teacher->update([
+        $teacher->user()->update([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => bcrypt($request->password),
+            'role'  =>  'Teacher',
+            'phone' => $request->phone,
+            'media_id' => $media_id ?? $teacher->media_id,
+        ]);
+
+        $teacher->update([
             'phone' => $request->phone,
             'media_id' => $media_id ?? $teacher->media_id,
             'address' => $request->address,
             'gender'    => $request->gender,
+            'role'  =>  'Teacher'
         ]);
 
         return redirect()->route('admin.teachers.index')
@@ -138,9 +152,8 @@ class TeacherController extends Controller
      */
     public function destroy(Teacher $teacher)
     {
-        $teacher->delete();
-
-        return redirect()->route('admin.teachers.index')
-            ->with('success', 'Teacher Deleted Successfully !!');
+        return redirect()->route('admin.parents.index')
+        ->with('error', 'You cannot delete an teacher !!');
     }
+
 }

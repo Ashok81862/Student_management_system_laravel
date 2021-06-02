@@ -35,7 +35,7 @@
                     <input
                         type="text"
                         name="name" id="name"
-                        value="{{ old('name') ?? $teacher->name }}"
+                        value="{{ old('name') ?? $teacher->user->name }}"
                         class="form-control @error('name') is-invalid @enderror"
                         autofocus
                     >
@@ -49,34 +49,10 @@
                     <input
                         type="email"
                         name="email" id="email"
-                        value="{{ old('email') ?? $teacher->email }}"
+                        value="{{ old('email') ?? $teacher->user->email }}"
                         class="form-control @error('email') is-invalid @enderror"
                     >
                     @error('email')
-                    <small class="form-text text-danger">{{ $message }}</small>
-                    @enderror
-                </div>
-
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input
-                        type="password"
-                        name="password" id="password"
-                        class="form-control @error('password') is-invalid @enderror"
-                    >
-                    @error('password')
-                    <small class="form-text text-danger">{{ $message }}</small>
-                    @enderror
-                </div>
-
-                <div class="form-group">
-                    <label for="password_confirmation">Confirm Password</label>
-                    <input
-                        type="password"
-                        name="password_confirmation" id="password_confirmation"
-                        class="form-control @error('password_confirmation') is-invalid @enderror"
-                    >
-                    @error('password_confirmation')
                     <small class="form-text text-danger">{{ $message }}</small>
                     @enderror
                 </div>
