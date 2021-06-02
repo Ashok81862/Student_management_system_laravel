@@ -58,7 +58,7 @@ class RoomController extends Controller
      */
     public function show(Room $room)
     {
-        // return view('admin.rooms.edit');
+         return view('admin.rooms.show', compact('room'));
     }
 
     /**
