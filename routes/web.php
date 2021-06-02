@@ -30,6 +30,11 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('rooms/{room}/teachers', [\App\Http\Controllers\Admin\RoomController::class, 'teachers'])->name('rooms.teachers');
     Route::put('rooms/{room}/teachers', [\App\Http\Controllers\Admin\RoomController::class, 'addTeacher'])->name('rooms.teachers.store');
     Route::delete('rooms/{room}/teachers', [\App\Http\Controllers\Admin\RoomController::class, 'removeTeacher'])->name('rooms.teachers.remove');
+
+    Route::get('rooms/{room}/subjects', [\App\Http\Controllers\Admin\RoomController::class, 'subjects'])->name('rooms.subjects');
+    Route::put('rooms/{room}/subjects', [\App\Http\Controllers\Admin\RoomController::class, 'addSubject'])->name('rooms.subjects.store');
+    Route::delete('rooms/{room}/subjects', [\App\Http\Controllers\Admin\RoomController::class, 'removeSubject'])->name('rooms.subjects.remove');
+
     Route::resource('rooms', \App\Http\Controllers\Admin\RoomController::class);
 
     //Teacher Routes
