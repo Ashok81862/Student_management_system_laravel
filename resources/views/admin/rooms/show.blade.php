@@ -10,6 +10,11 @@
         <div class="card-header">
             <h3 class="card-title text-bold" style="font-size:1.4rem">Room Details</h3>
             <div class="card-tools">
+                <a href="{{ route('admin.rooms.teachers', $room->id) }}" class="btn btn-primary btn-sm">
+                    <i class="mr-1 fas fa-fw fa-chalkboard"></i>
+                    <span>Add Teacher</span>
+                </a>
+
                 <a href="{{ route('admin.rooms.edit', $room->id) }}" class="btn btn-primary btn-sm">
                     <i class="fas fa-fw fa-edit mr-1"></i>
                     <span>Edit</span>
@@ -30,6 +35,19 @@
                 <tr>
                     <td>Name</td>
                     <td>{{ $room->name }}</td>
+                </tr>
+                <tr>
+                    <td>Teachers</td>
+                    <td>
+                        <ul>
+                            @if ($room->teachers != Null)
+                                @foreach ( $room->teachers as $teacher )
+                                    <li>{{ $teacher->name }}</li>
+                                @endforeach()
+                            @endif
+                            <li>No Teacher</li>
+                        </ul>
+                    </td>
                 </tr>
                 <tr>
                     <td>Created At</td>

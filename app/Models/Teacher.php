@@ -18,6 +18,6 @@ class Teacher extends Model
 
     public function rooms()
     {
-        $this->belongsToMany(Room::class);
+        return $this->belongsToMany(Room::class);
     }
 }

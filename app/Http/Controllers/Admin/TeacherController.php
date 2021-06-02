@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Room;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
 use App\Services\MediaService;
@@ -143,4 +144,5 @@ class TeacherController extends Controller
         return redirect()->route('admin.teachers.index')
             ->with('success', 'Teacher Deleted Successfully !!');
     }
+
 }

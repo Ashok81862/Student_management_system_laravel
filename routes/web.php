@@ -27,6 +27,9 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::resource('users', \App\Http\Controllers\Admin\UserController::class);
 
     //Room Routes
+    Route::get('rooms/{room}/teachers', [\App\Http\Controllers\Admin\RoomController::class, 'teachers'])->name('rooms.teachers');
+    Route::put('rooms/{room}/teachers', [\App\Http\Controllers\Admin\RoomController::class, 'addTeacher'])->name('rooms.teachers.store');
+    Route::delete('rooms/{room}/teachers', [\App\Http\Controllers\Admin\RoomController::class, 'removeTeacher'])->name('rooms.teachers.remove');
     Route::resource('rooms', \App\Http\Controllers\Admin\RoomController::class);
 
     //Teacher Routes

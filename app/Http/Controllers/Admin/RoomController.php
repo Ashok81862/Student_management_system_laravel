@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Room;
+use App\Models\Teacher;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -105,5 +106,39 @@ class RoomController extends Controller
 
         return redirect()->route('admin.rooms.index')
             ->with('success', 'Room Deleted Successfully !!');
+    }
+
+    public function teachers(Room $room)
+    {
+        $teachers = Teacher::all();
+
+        return view('admin.rooms.teachers', compact('room' , 'teachers'));
+    }
+
+    public function addTeacher(Request $request , Room $room)
+    {
+        $request->validate([
+            'teacher_id'  => ['required', 'exists:teachers,id'],
+        ]);
+
+        if  (!in_array($request->teacher_id , $room->teachers->pluck('id')->toArray()))
+                $room->teachers()->attach($request->teacher_id);
+
+        return redirect()->route('admin.rooms.teachers', $room->id)
+            ->with('success', 'Teacher has been added to Room successfully!');
+
+    }
+
+    public function removeTeacher(Request $request, Room $room)
+    {
+        $request->validate([
+            'teacher_id' => 'required|exists:rooms,id',
+        ]);
+
+        $room->teachers()->detach($request->teacher_id);
+
+        return redirect()->route('admin.rooms.teachers', $room->id)
+            ->with('success', 'Teacher has been removed from Room successfully!');
+
     }
 }
