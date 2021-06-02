@@ -15,6 +15,11 @@
                     <span>Add Teacher</span>
                 </a>
 
+                <a href="{{ route('admin.rooms.subjects', $room->id) }}" class="btn btn-primary btn-sm">
+                    <i class="mr-1 fas fa-fw fa-book"></i>
+                    <span>Add Subject</span>
+                </a>
+
                 <a href="{{ route('admin.rooms.edit', $room->id) }}" class="btn btn-primary btn-sm">
                     <i class="fas fa-fw fa-edit mr-1"></i>
                     <span>Edit</span>
