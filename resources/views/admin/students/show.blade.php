@@ -52,6 +52,12 @@
                     <td>{{ $student->address }}</td>
                 </tr>
                 <tr>
+                    <td>Parents</td>
+                    <td>
+                        <a href="{{ route('admin.parents.show',$student->parent_id ) }}">{{ $student->parent->user->name }}</a>
+                    </td>
+                </tr>
+                <tr>
                     <td>Photo</td>
                     <td>
                         @if($student->media_id)

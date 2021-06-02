@@ -25,6 +25,7 @@
                         <th>ID</th>
                         <th>Photo</th>
                         <th>Name</th>
+                        <th>Phone Number</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -38,6 +39,7 @@
                             @endif
                         </td>
                         <td>{{ $parent->user->name }}</td>
+                        <td>{{ $parent->phone  }}</td>
                         <td>
                             <!-- Show -->
                             <a href="{{ route('admin.parents.show', $parent->id) }}" class="btn btn-secondary btn-sm">

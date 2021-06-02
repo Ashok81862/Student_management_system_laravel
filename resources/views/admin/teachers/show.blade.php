@@ -48,6 +48,18 @@
                     <td>{{ $teacher->phone }}</td>
                 </tr>
                 <tr>
+                    <td>Room</td>
+                    <td>
+                        <ul>
+                            @foreach ($teacher->rooms as $room)
+                                     <li>
+                                         <a href="{{ route('admin.rooms.show', $room->id) }}">{{ $room->name }}</a>
+                                     </li>
+                            @endforeach
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
                     <td>Address</td>
                     <td>{{ $teacher->address }}</td>
                 </tr>

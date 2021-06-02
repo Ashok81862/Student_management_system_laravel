@@ -87,7 +87,9 @@ class TeacherController extends Controller
      */
     public function show(Teacher $teacher)
     {
-        return view('admin.teachers.show', compact('teacher'));
+        $rooms = Room::select(['id', 'name'])->get();
+
+        return view('admin.teachers.show', compact('teacher', 'rooms'));
     }
 
     /**
