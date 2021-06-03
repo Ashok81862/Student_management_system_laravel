@@ -59,6 +59,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
    Route::get('/guardians', [\App\Http\Controllers\GuardianController::class, 'index'])->name('guardians');
 
    //Teacher Routes
+   Route::get('/teachers/{room}/students', [\App\Http\Controllers\TeacherController::class, 'students'])->name('teachers.students');
    Route::get('/teachers', [\App\Http\Controllers\TeacherController::class, 'index'])->name('teachers');
 
    //Student Routes

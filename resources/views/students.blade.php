@@ -40,6 +40,25 @@
                     </tr>
             </table>
         </div>
+
+        <div class="card-body d-flex justify-content-around">
+            <table class="table mx-4">
+                <thead>
+                  <tr>
+                    <th scope="col">Date</th>
+                    <th scope="col">Class</th>
+                    <th scope="col">Attendance</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">2021-06-03</th>
+                    <td>{{ $user->student->room->name }}</td>
+                    <td>Present</td>
+                  </tr>
+                </tbody>
+              </table>
+        </div>
       </div>
 </div>
 

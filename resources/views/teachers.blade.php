@@ -35,7 +35,11 @@
                         <td>
                             <ul>
                                 @foreach ($user->teacher->rooms as $room  )
-                                <li>{{ $room->name }}</li>
+                                <li>
+                                    <a href="{{ route('teachers.students', $room->id) }}">
+                                        {{ $room->name }}
+                                    </a>
+                                </li>
                                 @endforeach
                             </ul>
                         </td>
