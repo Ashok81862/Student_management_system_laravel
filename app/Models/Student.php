@@ -31,8 +31,8 @@ class Student extends Model
         return $this->belongsTo(User::class);
     }
 
-    // public function guardianDetail()
-    // {
-    //     return $this->belongsTo(Guardian::class, 'guardian_id', 'id');
-    // }
+    public function guardianDetail()
+    {
+        return $this->belongsTo(Guardian::class, 'guardian_id', 'id');
+    }
 }

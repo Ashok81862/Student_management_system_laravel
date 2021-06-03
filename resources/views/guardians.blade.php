@@ -23,26 +23,26 @@
                     </tr>
                     <tr>
                         <td>Address</td>
-                        <td>{{ $user->parent->address }}</td>
+                        <td>{{ $user->guardian->address }}</td>
                     </tr>
                     <tr>
                         <td>Gender</td>
-                        <td>{{ $user->parent->gender }}</td>
+                        <td>{{ $user->guardian->gender }}</td>
                     </tr>
                     <tr>
                         <td>Phone Number</td>
-                        <td>{{ $user->parent->phone }}</td>
+                        <td>{{ $user->guardian->phone }}</td>
                     </tr>
-                    {{-- <tr>
+                    <tr>
                         <td>Children</td>
                         <td>
                             <ul>
-                                @foreach ($user->parent->students as $student)
-                                    <li>{{ $student->name }}</li>
+                                @foreach ($user->guardian->students as $student)
+                                    <li>{{ $student->user->name }}</li>
                                 @endforeach
                             </ul>
                         </td>
-                    </tr> --}}
+                    </tr>
             </table>
         </div>
       </div>
