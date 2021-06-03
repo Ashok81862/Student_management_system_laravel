@@ -10,6 +10,7 @@
         <div class="card-header">
             <h3 class="card-title text-bold" style="font-size:1.4rem">Teacher Details</h3>
             <div class="card-tools">
+
                 <a href="{{ route('admin.teachers.edit', $teacher->id) }}" class="btn btn-primary btn-sm">
                     <i class="fas fa-fw fa-edit mr-1"></i>
                     <span>Edit</span>
@@ -54,6 +55,18 @@
                             @foreach ($teacher->rooms as $room)
                                      <li>
                                          <a href="{{ route('admin.rooms.show', $room->id) }}">{{ $room->name }}</a>
+                                     </li>
+                            @endforeach
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Subject</td>
+                    <td>
+                        <ul>
+                            @foreach ($teacher->subjects as $subject)
+                                     <li>
+                                         <a href="{{ route('admin.rooms.show', $room->id) }}">{{ $subject->name }}</a>
                                      </li>
                             @endforeach
                         </ul>

@@ -20,4 +20,5 @@ class Subject extends Model
     {
         return $this->belongsToMany(Room::class);
     }
+
 }

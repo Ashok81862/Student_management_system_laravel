@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Room;
 use App\Models\User;
+use App\Models\Subject;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
 use App\Services\MediaService;
@@ -157,5 +158,4 @@ class TeacherController extends Controller
         return redirect()->route('admin.parents.index')
         ->with('error', 'You cannot delete an teacher !!');
     }
-
 }
