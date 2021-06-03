@@ -41,6 +41,10 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::resource('teachers', \App\Http\Controllers\Admin\TeacherController::class);
 
     //Subject Routes
+    Route::get('subjects/{subject}/teacher', [\App\Http\Controllers\Admin\SubjectController::class, 'teachers'])->name('subjects.teachers');
+    Route::put('subjects/{subject}/teacher', [\App\Http\Controllers\Admin\SubjectController::class, 'addTeacher'])->name('subjects.teachers.store');
+    Route::delete('subjects/{subject}/teacher', [\App\Http\Controllers\Admin\SubjectController::class, 'removeTeacher'])->name('subjects.teachers.remove');
+
     Route::resource('subjects', \App\Http\Controllers\Admin\SubjectController::class);
 
      //Parent Routes

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Room;
 use App\Models\Subject;
+use App\Models\Teacher;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -113,4 +114,37 @@ class SubjectController extends Controller
         return redirect()->route('admin.subjects.index')
             ->with('success', 'Subject Deleted Successfully !!');
     }
+
+    public function teachers(Subject $subject)
+    {
+        $teachers = Teacher::all();
+
+        return view('admin.subjects.teachers', compact('subject', 'teachers'));
+    }
+
+    public function addTeacher(Request $request, Subject $subject)
+    {
+        $request->validate([
+            'teacher_id'    => ['required', 'exists:teachers,id'],
+        ]);
+
+        if(!in_array($request->teacher_id, $subject->teachers->pluck('id')->toArray()))
+            $subject->teachers()->attach($request->teacher_id);
+
+        return redirect()->route('admin.subjects.teachers', $subject->id)
+            ->with('success', 'Teacher has been added to Subject successfully !!');
+    }
+
+    public function removeTeacher(Request $request, Subject $subject)
+    {
+        $request->validate([
+            'teacher_id' => 'required|exists:teachers,id',
+        ]);
+
+        $subject->teachers()->detach($request->teacher_id);
+
+        return redirect()->route('admin.subjects.teachers', $subject->id)
+            ->with('success', 'Teacher has been removed from Subject successfully !!');
+    }
+
 }
