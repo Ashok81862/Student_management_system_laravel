@@ -12,7 +12,7 @@ class SiteController extends Controller
             return redirect('/admin');
 
         if(auth()->user()->role == 'Parent')
-            return redirect('/parents');
+            return redirect('/guardians');
 
         if(auth()->user()->role == 'Student')
             return redirect('/students');

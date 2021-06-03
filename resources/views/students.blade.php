@@ -36,7 +36,7 @@
                     </tr>
                     <tr>
                        <td>Parents</td>
-                       <td>{{ $user->student->parentDetail->name }}</td>
+                       <td>{{ $user->student->guardian->user->name }}</td>
                     </tr>
             </table>
         </div>

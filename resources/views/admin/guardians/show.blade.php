@@ -55,7 +55,7 @@
                     <td>Children</td>
                     <td>
                         @foreach ($guardian->students as $student)
-                            <li>{{ $student->id }}</li>
+                            <li>{{ $student->user->name }}</li>
                         @endforeach
                     </td>
                 </tr>

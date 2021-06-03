@@ -128,11 +128,11 @@
                         class="form-control @error('guardian_id') is-invalid @enderror"
                     >
                         @foreach($guardians as $guardian)
-                            <option value="{{ $guardian->user_id }}" @if(old('guardian_id') == $guardian->user_id) selected @endif>{{ $guardian->user->name }}</option>
+                            <option value="{{ $guardian->id }}" @if(old('guardian_id') == $guardian->id) selected @endif>{{ $guardian->user->name }}</option>
                         @endforeach
                     </select>
 
-                    @error('room_id')
+                    @error('guardian_id')
                     <small class="form-text text-danger">{{ $message }}</small>
                     @enderror
                 </div>
